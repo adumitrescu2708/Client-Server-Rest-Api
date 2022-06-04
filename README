@@ -1,0 +1,59 @@
+@author: Dumitrescu Alexandra 323CA ACS UPB
+@since: May 2022
+
+Client - Server App | REST Api
+
+    @ Table of Contents
+        @ About archive
+        @ Work Flow
+        @ Credits
+    
+    @ About Archive
+    ./  |   client.c      (Main c file for the logic of the app)
+        |
+        |
+        |__ parser      (Auxiliar c files for command validation,
+                |            treating errors, and JSON parsing)
+                |
+                |__  json_parser.c/json_parser.h    (JSON parsing output/input)
+                |__  parson.c/parson.h              (@Credits below)
+                |__  message_parser.c/message_parser.h
+        |                                        (Command parsing & validation)
+        |        
+        |___ utils        (Main c files describing the commands and
+                |           the reqests computing)
+                |
+                |__ buffer.c/buffer.h (@Credits below)
+                |__ constants.h (Header with required commands and output)
+                |__ request.c/request.h (@Credits below - Used for
+                |                            computing HTTP requests)
+                |__ helpers.c/helper.h (@Credits below)
+
+    @ Work Flow
+        | In the client.c we parse each command from stdin and compute using
+        | methods describes in @utils/request.c GET/POST/DELETE HTTP requests
+        | to the server.
+        |
+        | The body of the messages send/received are firstly validated by 
+        | searching for an ERROR message using methods described in
+        | @parser/message_parser.c. Then, we compute JSON format using
+        | JSON formatting methods in @parser/json_parser.c
+        |
+        | In @parser/message_parser.c we retrieve from LOGIN command and
+        | ENTER_LIBRARY command the token and the cookie for the 
+        | corresponding session. Then, send the cookie and the authorization
+        | to the server.
+        |
+        | In case of an ERROR the server sends an error message and
+        | we retrieve it and print its content to stdout.
+        | Possible ERRORS are: not being connected to the server,
+        | not having the authorization to the library, bad credentials,
+        | not being logged in.
+
+    @ Credits
+        | For parson.c/parson.h I used the following:
+        | https://github.com/kgabis/parson
+        |
+        | For parsing requests and buffer formatting I 
+        | used the sources from PCom Laborator 10:
+        | https://ocw.cs.pub.ro/courses/pc/laboratoare/10

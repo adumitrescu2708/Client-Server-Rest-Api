@@ -1,0 +1,26 @@
+/**
+ * @file request.h
+ * 
+ * @copyright Copyright Pcom Lab 10 (c) 2022
+ * 
+ * @brief Added a method for delete request and
+ *          the possibility of adding the authorization
+ *          header to HTTP requests
+ * 
+ */
+#ifndef _REQUESTS_
+#define _REQUESTS_
+
+// computes and returns a GET request string (query_params
+// and cookies can be set to NULL if not needed)
+char *compute_get_request(char *host, char *url, char *query_params,
+							char **cookies, int cookies_count, char *authorization);
+
+char *compute_delete_request(char *host, char *url, char *query_params,
+							char **cookies, int cookies_count, char *authorization);
+
+// computes and returns a POST request string (cookies can be NULL if not needed)
+char *compute_post_request(char *host, char *url, char* content_type, char **body_data,
+							int body_data_fields_count, char** cookies, int cookies_count, char *authorization);
+
+#endif
